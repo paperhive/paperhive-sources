@@ -13,4 +13,10 @@ describe('verify urls', function() {
     });
   });
 
+  it('should fail for some random URLs', function() {
+    var url = 'http://www.google.com/';
+    var out = sources.verifyUrl(url);
+    should(out).not.be.ok;
+  });
+
 });
