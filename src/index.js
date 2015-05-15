@@ -1,6 +1,6 @@
 'use strict';
 
-//console.log(verifyUrl(test));
+//console.log(parseUrl(test));
 var idRegExp = '(\\d+\\.\\d+|.+/\\d+)(v(\\d+))?';
 var sources = [
   {
@@ -13,13 +13,14 @@ var sources = [
   }
 ];
 
-var verifyUrl = function(url) {
+var parseUrl = function(url) {
   for (var i = 0; i < sources.length; i++) {
     var result = sources[i].regexp.exec(url);
     if (result) {
       return {
         source: 'arxiv.org',
-        id: result[4]
+        id: result[5],
+        version: result[7]
       };
     }
   }
@@ -27,5 +28,5 @@ var verifyUrl = function(url) {
 };
 
 module.exports = {
-  verifyUrl: verifyUrl
+  parseUrl: parseUrl
 };
