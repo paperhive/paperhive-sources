@@ -17,7 +17,10 @@ var verifyUrl = function(url) {
   for (var i = 0; i < sources.length; i++) {
     var result = sources[i].regexp.exec(url);
     if (result) {
-      return result;
+      return {
+        source: 'arxiv.org',
+        id: result[4]
+      };
     }
   }
   return undefined;
