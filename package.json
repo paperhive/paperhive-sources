@@ -21,8 +21,8 @@
     "blanket": "^1.1.6",
     "coveralls": "^2.11.2",
     "mocha": "^2.1.0",
-    "mocha-lcov-reporter": "0.0.1",
-    "should": "^4.4.2"
+    "mocha-lcov-reporter": "0.0.2",
+    "should": "^6.0.1"
   },
   "config": {
     "blanket": {
