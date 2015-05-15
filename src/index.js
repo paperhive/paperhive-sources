@@ -1,14 +1,14 @@
 'use strict';
 
 //console.log(parseUrl(test));
-var idRegExp = '(\\d+\\.\\d+|.+/\\d+)(v(\\d+))?';
+var idRegExp = '(\\d+\\.\\d+|.+/\\d+)(?:v(\\d+))?';
 var sources = [
   {
     name: 'arxiv',
     regexp: new RegExp(
-      '^(https?://)?(.*\\.)?arxiv.org/(abs|pdf)/(' + idRegExp +
-      ')(\\.pdf)?([#\\?].*)?$',
-      'i'
+      '^(?:https?://)?(?:.*\\.)?arxiv.org/(?:abs|pdf)/' + idRegExp +
+      '(?:\\.pdf)?(?:[#\\?].*)?$',
+      'i' // case-insensitve matching
     )
   }
 ];
@@ -19,8 +19,8 @@ var parseUrl = function(url) {
     if (result) {
       return {
         source: 'arxiv.org',
-        id: result[5],
-        version: result[7]
+        id: result[1],
+        version: result[2]
       };
     }
   }
