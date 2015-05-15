@@ -1,7 +1,5 @@
 'use strict';
 
-var test = 'http://arxiv.org/abs/1208.0264';
-
 //console.log(verifyUrl(test));
 var idRegExp = '(\\d+\\.\\d+|.+/\\d+)(v(\\d+))?';
 var sources = [

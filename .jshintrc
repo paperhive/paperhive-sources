@@ -1,7 +1,5 @@
 {
-  "browserify": true,
-  "strict": true,
-  "globals": {
-    "MathJax": false
-  }
+  "globalstrict": true,
+  "mocha": true,
+  "node": true
 }
