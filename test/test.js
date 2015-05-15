@@ -5,12 +5,18 @@ var should = require('should');
 describe('verify urls', function() {
 
   it('should verify arXiv source URL', function() {
-    var url = 'http://arxiv.org/abs/1208.0264v4';
-    var out = sources.parseUrl(url);
+    var out = sources.parseUrl('http://arxiv.org/abs/1208.0264v4');
     out.should.eql({
       source: 'arxiv.org',
       id: '1208.0264',
       version: '4'
+    });
+
+    var out = sources.parseUrl('http://arxiv.org/pdf/1208.0264.pdf');
+    out.should.eql({
+      source: 'arxiv.org',
+      id: '1208.0264',
+      version: undefined
     });
   });
 
