@@ -1,0 +1,19 @@
+{
+  "name": "paperhive-source-checker",
+  "version": "0.0.0",
+  "description": "Checks if a given URL is valid for PaperHive and parses it.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/paperhive/paperhive-source-checker.git"
+  },
+  "author": "Nico Schlömer <nico@paperhive.org>",
+  "license": "GPL-3",
+  "bugs": {
+    "url": "https://github.com/paperhive/paperhive-source-checker/issues"
+  },
+  "homepage": "https://github.com/paperhive/paperhive-source-checker#readme"
+}
