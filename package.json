@@ -18,9 +18,9 @@
   },
   "homepage": "https://github.com/paperhive/paperhive-sources#readme",
   "devDependencies" : {
-    "blanket": "^1.1.6",
+    "blanket": "^1.1.7",
     "coveralls": "^2.11.2",
-    "mocha": "^2.1.0",
+    "mocha": "^2.2.5",
     "mocha-lcov-reporter": "0.0.2",
     "should": "^6.0.1"
   },
