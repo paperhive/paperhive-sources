@@ -1,19 +1,33 @@
 {
-  "name": "paperhive-source-checker",
+  "name": "paperhive-sources",
   "version": "0.0.0",
   "description": "Checks if a given URL is valid for PaperHive and parses it.",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha",
+    "coveralls": "mocha --require blanket -R mocha-lcov-reporter | coveralls"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/paperhive/paperhive-source-checker.git"
+    "url": "git+ssh://git@github.com/paperhive/paperhive-sources.git"
   },
   "author": "Nico Schlömer <nico@paperhive.org>",
   "license": "GPL-3",
   "bugs": {
-    "url": "https://github.com/paperhive/paperhive-source-checker/issues"
+    "url": "https://github.com/paperhive/paperhive-sources/issues"
   },
-  "homepage": "https://github.com/paperhive/paperhive-source-checker#readme"
+  "homepage": "https://github.com/paperhive/paperhive-sources#readme",
+  "devDependencies" : {
+    "blanket": "^1.1.6",
+    "coveralls": "^2.11.2",
+    "mocha": "^2.1.0",
+    "mocha-lcov-reporter": "0.0.1",
+    "should": "^4.4.2"
+  },
+  "config": {
+    "blanket": {
+      "pattern": "src",
+      "data-cover-never": "node_modules"
+    }
+  }
 }
