@@ -33,5 +33,6 @@ var parseUrl = function(url) {
 };
 
 module.exports = {
-  parseUrl: parseUrl
+  parseUrl: parseUrl,
+  hostnames: ['arxiv.org']
 };
