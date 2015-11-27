@@ -7,10 +7,10 @@
 
 //console.log(parseUrl(test));
 var urlParser = [
-  function translateArxiv(url) {
+  function parseArxiv(url) {
     var idRegExp = '(\\d+\\.\\d+|.+/\\d+)(?:v(\\d+))?';
     var regExp = new RegExp(
-      '^(?:https?://)?(?:.*\\.)?arxiv.org/(?:abs|pdf)/' + idRegExp +
+      '^(?:https?://)?(?:.*\\.)?arxiv\.org/(?:abs|pdf)/' + idRegExp +
       '(?:\\.pdf)?(?:[#\\?].*)?$',
       'i' // case-insensitive matching
     );
@@ -25,6 +25,16 @@ var urlParser = [
       ret.revisionId = result[1] + 'v' + result[2];
     }
     return ret;
+  },
+  function parseSpringer(url) {
+    var regExp = /^(?:https?:\/\/)?link\.springer\.com\/(?:article\/)?([^\/]*)(?:%2F|\/)([^#\/]*)/i;
+    var result = regExp.exec(url);
+    if (!result) return;
+
+    return {
+      type: 'springer',
+      id: result[1] + '/' + result[2]
+    };
   }
 ];
 
@@ -39,5 +49,5 @@ var parseUrl = function(url) {
 
 module.exports = {
   parseUrl: parseUrl,
-  hostnames: ['arxiv.org']
+  hostnames: ['arxiv.org', 'link.springer.com']
 };
