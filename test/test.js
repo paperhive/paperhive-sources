@@ -8,20 +8,20 @@ var sources = require('../src/');
 var should = require('should');
 
 describe('verify urls', function() {
-
   it('should verify arXiv source URL', function() {
-    var out = sources.parseUrl('http://arxiv.org/abs/1208.0264v4');
-    out.should.eql({
-      source: 'arxiv.org',
+    sources.parseUrl('http://arxiv.org/abs/1208.0264v4').should.eql({
+      type: 'arxiv',
       id: '1208.0264',
-      version: '4'
+      revisionId: '1208.0264v4',
     });
-
-    var out = sources.parseUrl('http://arxiv.org/pdf/1208.0264.pdf');
-    out.should.eql({
-      source: 'arxiv.org',
+    sources.parseUrl('http://arxiv.org/pdf/1208.0264.pdf').should.eql({
+      type: 'arxiv',
       id: '1208.0264',
-      version: undefined
+    });
+    sources.parseUrl('http://arxiv.org/abs/hep-th/0608195v3').should.eql({
+      type: 'arxiv',
+      id: 'hep-th/0608195',
+      revisionId: 'hep-th/0608195v3'
     });
   });
 
@@ -30,5 +30,4 @@ describe('verify urls', function() {
     var out = sources.parseUrl(url);
     should(out).not.be.ok;
   });
-
 });

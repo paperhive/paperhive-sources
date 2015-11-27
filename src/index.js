@@ -6,30 +6,35 @@
 'use strict';
 
 //console.log(parseUrl(test));
-var idRegExp = '(\\d+\\.\\d+|.+/\\d+)(?:v(\\d+))?';
-var sources = [
-  {
-    name: 'arxiv',
-    regexp: new RegExp(
+var urlParser = [
+  function translateArxiv(url) {
+    var idRegExp = '(\\d+\\.\\d+|.+/\\d+)(?:v(\\d+))?';
+    var regExp = new RegExp(
       '^(?:https?://)?(?:.*\\.)?arxiv.org/(?:abs|pdf)/' + idRegExp +
       '(?:\\.pdf)?(?:[#\\?].*)?$',
-      'i' // case-insensitve matching
-    )
+      'i' // case-insensitive matching
+    );
+    var result = regExp.exec(url);
+    if (!result) return;
+
+    var ret = {
+      type: 'arxiv',
+      id: result[1]
+    };
+    if (result[2]) {
+      ret.revisionId = result[1] + 'v' + result[2];
+    }
+    return ret;
   }
 ];
 
 var parseUrl = function(url) {
-  for (var i = 0; i < sources.length; i++) {
-    var result = sources[i].regexp.exec(url);
+  for (var i = 0; i < urlParser.length; i++) {
+    var result = urlParser[i](url);
     if (result) {
-      return {
-        source: 'arxiv.org',
-        id: result[1],
-        version: result[2]
-      };
+      return result;
     }
   }
-  return undefined;
 };
 
 module.exports = {
