@@ -1,8 +1,3 @@
-/**
- * @license PaperHive Chrome Extension v0.0.2
- * (c) 2015 Nico Schlömer <nico@paperhive.org>
- * License: GPL-3
- */
 'use strict';
 
 //console.log(parseUrl(test));
@@ -49,5 +44,8 @@ var parseUrl = function(url) {
 
 module.exports = {
   parseUrl: parseUrl,
-  hostnames: ['arxiv.org', 'link.springer.com']
+  hostnames: [
+    'arxiv.org',
+    'link.springer.com'
+  ]
 };
