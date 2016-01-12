@@ -4,7 +4,7 @@
   "description": "Checks if a given URL is valid for PaperHive and parses it.",
   "main": "src/index.js",
   "scripts": {
-    "lint": "eslint test src",
+    "lint": "./node_modules/.bin/eslint test src",
     "test": "mocha",
     "coveralls": "mocha --require blanket -R mocha-lcov-reporter | coveralls"
   },
