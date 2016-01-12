@@ -22,7 +22,7 @@ var urlParser = [
       id: result[1]
     };
     if (result[2]) {
-      ret.revisionId = result[1] + 'v' + result[2];
+      ret.revisionId = 'v' + result[2];
     }
     return ret;
   },
