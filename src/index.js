@@ -31,8 +31,8 @@ const urlParser = [
 ];
 
 const parseUrl = (url) => {
-  for (var i = 0; i < urlParser.length; i++) {
-    var result = urlParser[i](url);
+  for (let i = 0; i < urlParser.length; i++) {
+    const result = urlParser[i](url);
     if (result) {
       return result;
     }
