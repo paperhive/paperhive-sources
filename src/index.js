@@ -14,7 +14,7 @@ var urlParser = [
       id: result[1],
     };
     if (result[2]) {
-      ret.revisionId = 'v' + result[2];
+      ret.revision = 'v' + result[2];
     }
     return ret;
   },

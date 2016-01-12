@@ -21,3 +21,8 @@ parses it.
     ```
     npm publish
     ```
+* Add Git tag:
+    ```
+    git tag v2.0.1
+    git push --tags
+    ```
