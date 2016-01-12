@@ -2,6 +2,9 @@ language: node_js
 
 sudo: false
 
-after_success:
+test:
   - npm run lint
+  - npm run test
+
+after_success:
   - npm run coveralls
