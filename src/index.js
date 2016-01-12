@@ -1,15 +1,15 @@
-const urlParser = [
+var urlParser = [
   function parseArxiv(url) {
-    const idRegExp = '(\\d+\\.\\d+|.+/\\d+)(?:v(\\d+))?';
-    const regExp = new RegExp(
+    var idRegExp = '(\\d+\\.\\d+|.+/\\d+)(?:v(\\d+))?';
+    var regExp = new RegExp(
       '^(?:https?://)?(?:.*\\.)?arxiv\.org/(?:abs|pdf)/' + idRegExp +
       '(?:\\.pdf)?(?:[#\\?].*)?$',
       'i' // case-insensitive matching
     );
-    const result = regExp.exec(url);
+    var result = regExp.exec(url);
     if (!result) return undefined;
 
-    const ret = {
+    var ret = {
       type: 'arxiv',
       id: result[1],
     };
@@ -19,20 +19,20 @@ const urlParser = [
     return ret;
   },
   function parseSpringer(url) {
-    const regExp = /^(?:https?:\/\/)?link\.springer\.com\/(?:article\/)?([^\/]*)(?:%2F|\/)([^#\/]*)/i;
-    const result = regExp.exec(url);
+    var regExp = /^(?:https?:\/\/)?link\.springer\.com\/(?:article\/)?([^\/]*)(?:%2F|\/)([^#\/]*)/i;
+    var result = regExp.exec(url);
     if (!result) return undefined;
-
-    return {
+    var a = {
       type: 'springer',
       id: result[1] + '/' + result[2],
     };
+    return a;
   },
 ];
 
-const parseUrl = (url) => {
-  for (let i = 0; i < urlParser.length; i++) {
-    const result = urlParser[i](url);
+var parseUrl = (url) => {
+  for (var i = 0; i < urlParser.length; i++) {
+    var result = urlParser[i](url);
     if (result) {
       return result;
     }

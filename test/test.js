@@ -1,5 +1,5 @@
-const sources = require('../src/');
-const should = require('should');
+var sources = require('../src/');
+var should = require('should');
 
 describe('parseUrl()', () => {
   it('should parse arXiv URLs', () => {
@@ -20,7 +20,7 @@ describe('parseUrl()', () => {
   });
 
   it('should parse springer URLs', () => {
-    const sll15 = {
+    var sll15 = {
       type: 'springer',
       id: '10.1007/s10714-015-1876-6',
     };
@@ -35,8 +35,8 @@ describe('parseUrl()', () => {
   });
 
   it('should fail for some random URLs', () => {
-    const url = 'http://www.google.com/';
-    const out = sources.parseUrl(url);
+    var url = 'http://www.google.com/';
+    var out = sources.parseUrl(url);
     should(out).not.be.ok;
   });
 });
