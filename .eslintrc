@@ -1,0 +1,10 @@
+{
+  "extends": "airbnb/base",
+  "ecmaFeatures": {
+    "generators": true
+  },
+  "rules": {
+    "object-curly-spacing": 0,
+    "no-cond-assign": [2, "except-parens"]
+  }
+}
