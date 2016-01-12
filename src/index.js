@@ -1,11 +1,3 @@
-/**
- * @license PaperHive Chrome Extension v0.0.2
- * (c) 2015 Nico Schlömer <nico@paperhive.org>
- * License: GPL-3
- */
-'use strict';
-
-//console.log(parseUrl(test));
 var urlParser = [
   function parseArxiv(url) {
     var idRegExp = '(\\d+\\.\\d+|.+/\\d+)(?:v(\\d+))?';
@@ -15,30 +7,30 @@ var urlParser = [
       'i' // case-insensitive matching
     );
     var result = regExp.exec(url);
-    if (!result) return;
+    if (!result) return undefined;
 
     var ret = {
       type: 'arxiv',
-      id: result[1]
+      id: result[1],
     };
     if (result[2]) {
-      ret.revisionId = result[1] + 'v' + result[2];
+      ret.revisionId = 'v' + result[2];
     }
     return ret;
   },
   function parseSpringer(url) {
     var regExp = /^(?:https?:\/\/)?link\.springer\.com\/(?:article\/)?([^\/]*)(?:%2F|\/)([^#\/]*)/i;
     var result = regExp.exec(url);
-    if (!result) return;
-
-    return {
+    if (!result) return undefined;
+    var a = {
       type: 'springer',
-      id: result[1] + '/' + result[2]
+      id: result[1] + '/' + result[2],
     };
-  }
+    return a;
+  },
 ];
 
-var parseUrl = function(url) {
+var parseUrl = (url) => {
   for (var i = 0; i < urlParser.length; i++) {
     var result = urlParser[i](url);
     if (result) {
@@ -48,6 +40,6 @@ var parseUrl = function(url) {
 };
 
 module.exports = {
-  parseUrl: parseUrl,
-  hostnames: ['arxiv.org', 'link.springer.com']
+  parseUrl,
+  hostnames: ['arxiv.org', 'link.springer.com'],
 };
