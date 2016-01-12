@@ -6,7 +6,7 @@ describe('parseUrl()', () => {
     sources.parseUrl('http://arxiv.org/abs/1208.0264v4').should.eql({
       type: 'arxiv',
       id: '1208.0264',
-      revisionId: 'v4',
+      revision: 'v4',
     });
     sources.parseUrl('http://arxiv.org/pdf/1208.0264.pdf').should.eql({
       type: 'arxiv',
@@ -15,7 +15,7 @@ describe('parseUrl()', () => {
     sources.parseUrl('http://de.arxiv.org/abs/hep-th/0608195v3').should.eql({
       type: 'arxiv',
       id: 'hep-th/0608195',
-      revisionId: 'v3',
+      revision: 'v3',
     });
   });
 
