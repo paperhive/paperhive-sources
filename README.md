@@ -26,3 +26,8 @@ parses it.
     git tag v2.0.1
     git push --tags
     ```
+
+## License
+
+The paperhive-sources is licensed under the
+[GPL3](https://www.gnu.org/licenses/gpl.html) license.
