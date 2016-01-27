@@ -28,7 +28,11 @@ module.exports = function paperhiveSources(_options) {
       return ret;
     },
     function parseSpringer(url) {
-      var regExp = /^(?:https?:\/\/)?link\.springer\.com\/(?:article\/)?([^\/]*)(?:%2F|\/)([^#\/]*)/i;
+      var regExp = new RegExp(
+        '^(?:https?://)?link\.springer\.com/' +
+        '(?:article/)?([^/]*)(?:%2F|/)([^#/]*)',
+        'i'
+      );
       var result = regExp.exec(url);
       if (!result) return undefined;
       var a = {
