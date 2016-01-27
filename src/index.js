@@ -193,9 +193,9 @@ module.exports = function paperhiveSources(_options) {
   }
 
   return {
-    parseUrl,
-    getPdfConnection,
-    getAccessiblePdfUrl,
+    parseUrl: parseUrl,
+    getPdfConnection: getPdfConnection,
+    getAccessiblePdfUrl: getAccessiblePdfUrl,
     hostnames: ['arxiv.org', 'link.springer.com'],
   };
 };
