@@ -1,3 +1,5 @@
+var urlPackage = require('url');
+
 var urlParser = [
   function parseArxiv(url) {
     var idRegExp = '(\\d+\\.\\d+|.+/\\d+)(?:v(\\d+))?';
@@ -67,7 +69,7 @@ const getAbbreviation = name => {
 
 // Generate the URL for a PDF, given a bunch of meta data for an article
 // (revision).
-var getPdfUrl = (documentRevision) => {
+var getPdfConnection = (documentRevision) => {
   if (documentRevision.remote.type === 'arxiv') {
     return {
       url: 'http://arxiv.org/pdf/' +
@@ -153,11 +155,35 @@ var getPdfUrl = (documentRevision) => {
       hasCors: false,
     };
   }
-  return undefined;
+  throw new Error('Unable to retrieve remote PDF URL.');
+};
+
+var getAccessiblePdfUrl = (documentRevision) => {
+  // TODO actually check if user has access beyond open access
+  var userHasAccess = documentRevision.openAccess;
+  if (!userHasAccess) {
+    throw new Error('You currently have no access to the PDF.');
+  }
+
+  var pdfConn = getPdfConnection(documentRevision);
+
+  if (pdfConn.hasCors && urlPackage.parse(pdfConn.url).protocol === 'https') {
+    // all good
+    return pdfConn.url;
+  }
+
+  // No HTTPS/Cors? PaperHive can proxy the document if it's open access.
+  if (documentRevision.openAccess) {
+    return 'https://paperhive.org/api/proxy?url=' +
+      encodeURIComponent(pdfConn.url);
+  }
+
+  throw new Error('The publisher makes the PDF available only through an insecure connection.');
 };
 
 module.exports = {
   parseUrl,
-  getPdfUrl,
+  getPdfConnection,
+  getAccessiblePdfUrl,
   hostnames: ['arxiv.org', 'link.springer.com'],
 };

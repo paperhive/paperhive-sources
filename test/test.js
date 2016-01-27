@@ -2,7 +2,7 @@ var sources = require('../src/');
 var should = require('should');
 
 describe('parseUrl()', () => {
-  it('should parse arXiv URLs', () => {
+  it('should parse arXiv URL', () => {
     sources.parseUrl('http://arxiv.org/abs/1208.0264v4').should.eql({
       type: 'arxiv',
       id: '1208.0264',
@@ -19,7 +19,7 @@ describe('parseUrl()', () => {
     });
   });
 
-  it('should parse springer URLs', () => {
+  it('should parse springer URL', () => {
     var sll15 = {
       type: 'springer',
       id: '10.1007/s10714-015-1876-6',
@@ -34,27 +34,27 @@ describe('parseUrl()', () => {
     });
   });
 
-  it('should fail for some random URLs', () => {
+  it('should fail for some random URL', () => {
     var url = 'http://www.google.com/';
     var out = sources.parseUrl(url);
     should(out).not.be.ok;
   });
 });
 
-describe('getPdfUrl()', () => {
-  it('should get arXiv URLs', () => {
+describe('getPdfConnection()', () => {
+  it('should get arXiv URL', () => {
     const doc = {
       remote: {
         type: 'arxiv',
         id: '1405.0001',
         revision: 'v1',
       }};
-    const out = sources.getPdfUrl(doc);
+    const out = sources.getPdfConnection(doc);
     out.should.have.property('url', 'http://arxiv.org/pdf/1405.0001v1.pdf');
     out.should.have.property('hasCors', false);
   });
 
-  it('should get Nature URLs', () => {
+  it('should get Nature URL', () => {
     const doc = {
       remote: {
         type: 'nature',
@@ -63,12 +63,12 @@ describe('getPdfUrl()', () => {
       },
       doi: '10.1038/ncomms8575',
     };
-    const out = sources.getPdfUrl(doc);
+    const out = sources.getPdfConnection(doc);
     out.should.have.property('url', 'http://www.nature.com/articles/ncomms8575.pdf');
     out.should.have.property('hasCors', false);
   });
 
-  it('should get PLOS URLs', () => {
+  it('should get PLOS URL', () => {
     const doc = {
       remote: {
         type: 'plos',
@@ -77,12 +77,12 @@ describe('getPdfUrl()', () => {
       },
       doi: '10.1371/journal.pone.0143047',
     };
-    const out = sources.getPdfUrl(doc);
+    const out = sources.getPdfConnection(doc);
     out.should.have.property('url', 'http://www.plosone.org/article/fetchObject.action?uri=info:doi/10.1371/journal.pone.0143047&representation=PDF');
     out.should.have.property('hasCors', false);
   });
 
-  it('should get Springer URLs', () => {
+  it('should get Springer URL', () => {
     const doc = {
       remote: {
         type: 'springer',
@@ -91,23 +91,23 @@ describe('getPdfUrl()', () => {
       },
       doi: '10.1186/s40535-015-0013-7',
     };
-    const out = sources.getPdfUrl(doc);
+    const out = sources.getPdfConnection(doc);
     out.should.have.property('url', 'http://link.springer.com/content/pdf/10.1186%2Fs40535-015-0013-7.pdf');
     out.should.have.property('hasCors', false);
   });
 
-  it('should get IOP URLs', () => {
+  it('should get IOP URL', () => {
     const doc = {
       remote: {},
       publisher: 'IOP Publishing',
       doi: '10.1088/1367-2630/18/1/011001',
     };
-    const out = sources.getPdfUrl(doc);
+    const out = sources.getPdfConnection(doc);
     out.should.have.property('url', 'https://iopscience.iop.org/article/10.1088/1367-2630/18/1/011001/pdf');
     out.should.have.property('hasCors', false);
   });
 
-  it('should get Optical Society URLs', () => {
+  it('should get Optical Society URL', () => {
     const doc = {
       remote: {},
       publisher: 'The Optical Society',
@@ -117,34 +117,34 @@ describe('getPdfUrl()', () => {
       issue: '5',
       pageStart: '544',
     };
-    const out = sources.getPdfUrl(doc);
+    const out = sources.getPdfConnection(doc);
     out.should.have.property('url', 'https://www.osapublishing.org/jt/viewmedia.cfm?uri=jt-1-5-544&seq=0');
     out.should.have.property('hasCors', false);
   });
 
-  it('should get ACM URLs', () => {
+  it('should get ACM URL', () => {
     const doc = {
       remote: {},
       publisher: 'Association for Computing Machinery (ACM)',
       doi: '10.1145/2831270',
     };
-    const out = sources.getPdfUrl(doc);
+    const out = sources.getPdfConnection(doc);
     out.should.have.property('url', 'https://dl.acm.org/ft_gateway.cfm?id=1145/2831270');
     out.should.have.property('hasCors', false);
   });
 
-  it('should get SIAM URLs', () => {
+  it('should get SIAM URL', () => {
     const doc = {
       remote: {},
       publisher: 'Society for Industrial & Applied Mathematics (SIAM)',
       doi: '10.1137/140992564',
     };
-    const out = sources.getPdfUrl(doc);
+    const out = sources.getPdfConnection(doc);
     out.should.have.property('url', 'http://epubs.siam.org/doi/pdf/10.1137/140992564');
     out.should.have.property('hasCors', false);
   });
 
-  it('should get OUP URLs', () => {
+  it('should get OUP URL', () => {
     const doc = {
       remote: {},
       publisher: 'Oxford University Press (OUP)',
@@ -153,8 +153,26 @@ describe('getPdfUrl()', () => {
       issue: '2',
       pageStart: '449',
     };
-    const out = sources.getPdfUrl(doc);
+    const out = sources.getPdfConnection(doc);
     out.should.have.property('url', 'http://jxb.oxfordjournals.org/content/67/2/449.full.pdf');
     out.should.have.property('hasCors', false);
+  });
+});
+
+describe('getPdfConnection()', () => {
+  it('should get accessible arXiv URL', () => {
+    const doc = {
+      remote: {
+        type: 'arxiv',
+        id: '1405.0001',
+        revision: 'v1',
+      },
+      openAccess: true,
+    };
+    const out = sources.getAccessiblePdfUrl(doc);
+    out.should.be.equal(
+      'https://paperhive.org/api/proxy?url=' +
+      encodeURIComponent('http://arxiv.org/pdf/1405.0001v1.pdf')
+    );
   });
 });
