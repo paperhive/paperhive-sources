@@ -39,7 +39,123 @@ var parseUrl = (url) => {
   }
 };
 
+const getAbbreviation = name => {
+  // With some publishers, the URL to the PDFs will contain an abbreviation of
+  // the journal name, for example:
+  //
+  // Optics Letters => ol
+  // Journal of Lightwave Technology => jlt
+  // Physical Review D => prd
+  // Reviews of Modern Physics => rmp
+  //
+  // etc. The pattern seems to be: First letter of all words, except filling
+  // words
+  // This method returns just that.
+  //
+
+  // Kick out filling words
+  const cleanName = name.
+    replace('of ', '').
+    replace('Of ', '').
+    replace('the ', '').
+    replace('The ', '');
+  const matches = cleanName.match(/\b(\w)/g);
+  return matches.join('').toLowerCase();
+};
+
+// Generate the URL for a PDF, given a bunch of meta data for an article
+// (revision).
+var getPdfUrl = (documentRevision) => {
+  if (documentRevision.remote.type === 'arxiv') {
+    return {
+      url: 'http://arxiv.org/pdf/' +
+        documentRevision.remote.id +
+        documentRevision.remote.revision + '.pdf',
+      hasCors: false,
+    };
+  } else if (documentRevision.remote.type === 'nature') {
+    // See <http://www.nature.com/articles/npjcompumats20151> for reference.
+    const strippedDoi = documentRevision.doi.
+      replace(/[^\/]*\//, ''). // remove first part
+      replace(/\./g, ''); // remove `.`
+    // No HTTPS, no CORS. Nature notified on Jan 27, 2016.
+    return {
+      url: 'http://www.nature.com/articles/' + strippedDoi + '.pdf',
+      hasCors: false,
+    };
+  } else if (documentRevision.remote.type === 'plos') {
+    // No HTTPS, no CORS. PLOS notified on Jan 27, 2016.
+    return {
+      url: 'http://www.plosone.org/article/fetchObject.action?uri=info:doi/' +
+        documentRevision.doi +
+        '&representation=PDF',
+      hasCors: false,
+    };
+  } else if (documentRevision.remote.type === 'springer') {
+    return {
+      // No HTTPS, no CORS. Springer notified on Jan 27, 2016.
+      url: 'http://link.springer.com/content/pdf/' +
+      encodeURIComponent(documentRevision.doi) + '.pdf',
+      hasCors: false,
+    };
+  } else if (documentRevision.publisher === 'IOP Publishing') {
+    // encodeURIComponent(revision.doi)?
+    //
+    // With HTTPS, but no CORS. Contacted IOP on Jan 27, 2016.
+    return {
+      url: 'https://iopscience.iop.org/article/' + documentRevision.doi + '/pdf',
+      hasCors: false,
+    };
+    /*
+    // Yikes! All APS PDFs are protected by a captcha,
+    // ```
+    // Verification Required
+    // Please click on the image of Albert Einstein below.
+    // ```
+    // We regret having to add this extra step for our subscribers, but have
+    // found it necessary due to systematic automated downloading of our content
+    // (in violation of our Terms and Conditions).
+    } else if (revision.publisher === 'American Physical Society (APS)') {
+    return 'https://journals.aps.org/' + getAbbreviation(revision.journalName) + '/pdf/' + revision.doi;
+    }
+    */
+  } else if (documentRevision.publisher === 'The Optical Society') {
+    const abb = getAbbreviation(documentRevision.journalName);
+    return {
+      url: 'https://www.osapublishing.org/' + abb + '/viewmedia.cfm?uri=' +
+        abb + '-' + documentRevision.volume + '-' +
+        documentRevision.issue + '-' + documentRevision.pageStart +
+        '&seq=0',
+      hasCors: false,
+    };
+  } else if (documentRevision.publisher === 'Association for Computing Machinery (ACM)') {
+    // With ACM, the last part of a DOI serves as identifier, e.g.,
+    // DOI: 10.1145/2746539.2746608
+    // ID: 2746608
+    const doiLastPart = documentRevision.doi.split('.').pop();
+    return {
+      url: 'https://dl.acm.org/ft_gateway.cfm?id=' + doiLastPart,
+      hasCors: false,
+    };
+  } else if (documentRevision.publisher === 'Society for Industrial & Applied Mathematics (SIAM)') {
+    return {
+      url: 'http://epubs.siam.org/doi/pdf/' + documentRevision.doi,
+      hasCors: false,
+    };
+  } else if (documentRevision.publisher === 'Oxford University Press (OUP)') {
+    return {
+      url: 'http://' + getAbbreviation(documentRevision.journalName) +
+        '.oxfordjournals.org/content/' +
+        documentRevision.volume + '/' + documentRevision.issue +
+        '/' + documentRevision.pageStart + '.full.pdf',
+      hasCors: false,
+    };
+  }
+  return undefined;
+};
+
 module.exports = {
   parseUrl,
+  getPdfUrl,
   hostnames: ['arxiv.org', 'link.springer.com'],
 };

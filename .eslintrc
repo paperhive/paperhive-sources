@@ -4,6 +4,7 @@
     "object-curly-spacing": 0,
     "vars-on-top": 0,
     "no-var": 0,
-    "no-cond-assign": [2, "except-parens"]
+    "no-cond-assign": [2, "except-parens"],
+    "prefer-template": 0,
   }
 }
