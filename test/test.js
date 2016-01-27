@@ -40,3 +40,45 @@ describe('parseUrl()', () => {
     should(out).not.be.ok;
   });
 });
+
+describe('getPdfUrl()', () => {
+  it('should get arXiv URLs', () => {
+    const doc = {
+      remote: {
+        type: 'arxiv',
+        id: '1405.0001',
+        revision: 'v1',
+      }};
+    const out = sources.getPdfUrl(doc);
+    out.should.have.property('url', 'http://arxiv.org/pdf/1405.0001v1.pdf');
+    out.should.have.property('hasCors', false);
+  });
+
+  it('should get Nature URLs', () => {
+    const doc = {
+      remote: {
+        type: 'nature',
+        id: '10.1038/ncomms8575',
+        revision: '10.1038/ncomms8575',
+      },
+      doi: '10.1038/ncomms8575',
+    };
+    const out = sources.getPdfUrl(doc);
+    out.should.have.property('url', 'http://www.nature.com/articles/ncomms8575.pdf');
+    out.should.have.property('hasCors', false);
+  });
+
+  it('should get PLOS URLs', () => {
+    const doc = {
+      remote: {
+        type: 'plos',
+        id: '10.1371/journal.pone.0143047',
+        revision: '10.1371/journal.pone.0143047',
+      },
+      doi: '10.1371/journal.pone.0143047',
+    };
+    const out = sources.getPdfUrl(doc);
+    out.should.have.property('url', 'http://www.plosone.org/article/fetchObject.action?uri=info:doi/10.1371/journal.pone.0143047&representation=PDF');
+    out.should.have.property('hasCors', false);
+  });
+});
