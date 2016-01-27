@@ -1,4 +1,4 @@
-var sources = require('../src/');
+var sources = require('../src/')();
 var should = require('should');
 
 describe('parseUrl()', () => {
