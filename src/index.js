@@ -52,13 +52,15 @@ const getAbbreviation = name => {
   // words
   // This method returns just that.
   //
+  // The Oxford journals replace "Experimental" by "x" in the abbreviation.
 
   // Kick out filling words
   const cleanName = name.
     replace('of ', '').
     replace('Of ', '').
     replace('the ', '').
-    replace('The ', '');
+    replace('The ', '').
+    replace('Experimental ', 'Xperimental ');
   const matches = cleanName.match(/\b(\w)/g);
   return matches.join('').toLowerCase();
 };
