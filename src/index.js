@@ -39,16 +39,16 @@ module.exports = function paperhiveSources(_options) {
     },
   ];
 
-  var parseUrl = (url) => {
+  function parseUrl(url) {
     for (var i = 0; i < urlParser.length; i++) {
       var result = urlParser[i](url);
       if (result) {
         return result;
       }
     }
-  };
+  }
 
-  const getAbbreviation = name => {
+  function getAbbreviation(name) {
     // With some publishers, the URL to the PDFs will contain an abbreviation of
     // the journal name, for example:
     //
@@ -72,11 +72,11 @@ module.exports = function paperhiveSources(_options) {
       replace('Experimental ', 'Xperimental ');
     const matches = cleanName.match(/\b(\w)/g);
     return matches.join('').toLowerCase();
-  };
+  }
 
   // Generate the URL for a PDF, given a bunch of meta data for an article
   // (revision).
-  var getPdfConnection = (documentRevision) => {
+  function getPdfConnection(documentRevision) {
     if (documentRevision.remote.type === 'arxiv') {
       return {
         url: 'http://arxiv.org/pdf/' +
@@ -164,9 +164,9 @@ module.exports = function paperhiveSources(_options) {
       };
     }
     throw new Error('Unable to retrieve remote PDF URL.');
-  };
+  }
 
-  var getAccessiblePdfUrl = (documentRevision) => {
+  function getAccessiblePdfUrl(documentRevision) {
     // TODO actually check if user has access beyond open access
     var userHasAccess = documentRevision.openAccess;
     if (!userHasAccess) {
@@ -186,7 +186,7 @@ module.exports = function paperhiveSources(_options) {
     }
 
     throw new Error('The publisher makes the PDF available only through an insecure connection.');
-  };
+  }
 
   return {
     parseUrl,
