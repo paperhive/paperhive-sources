@@ -81,4 +81,80 @@ describe('getPdfUrl()', () => {
     out.should.have.property('url', 'http://www.plosone.org/article/fetchObject.action?uri=info:doi/10.1371/journal.pone.0143047&representation=PDF');
     out.should.have.property('hasCors', false);
   });
+
+  it('should get Springer URLs', () => {
+    const doc = {
+      remote: {
+        type: 'springer',
+        id: '10.1186/s40535-015-0013-7',
+        revision: '10.1186/s40535-015-0013-7',
+      },
+      doi: '10.1186/s40535-015-0013-7',
+    };
+    const out = sources.getPdfUrl(doc);
+    out.should.have.property('url', 'http://link.springer.com/content/pdf/10.1186%2Fs40535-015-0013-7.pdf');
+    out.should.have.property('hasCors', false);
+  });
+
+  it('should get IOP URLs', () => {
+    const doc = {
+      remote: {},
+      publisher: 'IOP Publishing',
+      doi: '10.1088/1367-2630/18/1/011001',
+    };
+    const out = sources.getPdfUrl(doc);
+    out.should.have.property('url', 'https://iopscience.iop.org/article/10.1088/1367-2630/18/1/011001/pdf');
+    out.should.have.property('hasCors', false);
+  });
+
+  it('should get Optical Society URLs', () => {
+    const doc = {
+      remote: {},
+      publisher: 'The Optical Society',
+      doi: 'DOI',
+      journalName: 'Journal of Test',
+      volume: '1',
+      issue: '5',
+      pageStart: '544',
+    };
+    const out = sources.getPdfUrl(doc);
+    out.should.have.property('url', 'https://www.osapublishing.org/jt/viewmedia.cfm?uri=jt-1-5-544&seq=0');
+    out.should.have.property('hasCors', false);
+  });
+
+  it('should get ACM URLs', () => {
+    const doc = {
+      remote: {},
+      publisher: 'Association for Computing Machinery (ACM)',
+      doi: '10.1145/2831270',
+    };
+    const out = sources.getPdfUrl(doc);
+    out.should.have.property('url', 'https://dl.acm.org/ft_gateway.cfm?id=1145/2831270');
+    out.should.have.property('hasCors', false);
+  });
+
+  it('should get SIAM URLs', () => {
+    const doc = {
+      remote: {},
+      publisher: 'Society for Industrial & Applied Mathematics (SIAM)',
+      doi: '10.1137/140992564',
+    };
+    const out = sources.getPdfUrl(doc);
+    out.should.have.property('url', 'http://epubs.siam.org/doi/pdf/10.1137/140992564');
+    out.should.have.property('hasCors', false);
+  });
+
+  it('should get OUP URLs', () => {
+    const doc = {
+      remote: {},
+      publisher: 'Oxford University Press (OUP)',
+      journalName: 'Journal of Experimental Botany',
+      volume: '67',
+      issue: '2',
+      pageStart: '449',
+    };
+    const out = sources.getPdfUrl(doc);
+    out.should.have.property('url', 'http://jxb.oxfordjournals.org/content/67/2/449.full.pdf');
+    out.should.have.property('hasCors', false);
+  });
 });
