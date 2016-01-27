@@ -68,13 +68,13 @@ module.exports = function paperhiveSources(_options) {
     // The Oxford journals replace "Experimental" by "x" in the abbreviation.
 
     // Kick out filling words
-    const cleanName = name.
+    var cleanName = name.
       replace('of ', '').
       replace('Of ', '').
       replace('the ', '').
       replace('The ', '').
       replace('Experimental ', 'Xperimental ');
-    const matches = cleanName.match(/\b(\w)/g);
+    var matches = cleanName.match(/\b(\w)/g);
     return matches.join('').toLowerCase();
   }
 
@@ -90,7 +90,7 @@ module.exports = function paperhiveSources(_options) {
       };
     } else if (documentRevision.remote.type === 'nature') {
       // See <http://www.nature.com/articles/npjcompumats20151> for reference.
-      const strippedDoi = documentRevision.doi.
+      var strippedDoi = documentRevision.doi.
         replace(/[^\/]*\//, ''). // remove first part
         replace(/\./g, ''); // remove `.`
       // No HTTPS, no CORS. Nature notified on Jan 27, 2016.
@@ -135,7 +135,7 @@ module.exports = function paperhiveSources(_options) {
       }
       */
     } else if (documentRevision.publisher === 'The Optical Society') {
-      const abb = getAbbreviation(documentRevision.journalName);
+      var abb = getAbbreviation(documentRevision.journalName);
       return {
         url: 'https://www.osapublishing.org/' + abb + '/viewmedia.cfm?uri=' +
           abb + '-' + documentRevision.volume + '-' +
@@ -147,7 +147,7 @@ module.exports = function paperhiveSources(_options) {
       // With ACM, the last part of a DOI serves as identifier, e.g.,
       // DOI: 10.1145/2746539.2746608
       // ID: 2746608
-      const doiLastPart = documentRevision.doi.split('.').pop();
+      var doiLastPart = documentRevision.doi.split('.').pop();
       return {
         url: 'https://dl.acm.org/ft_gateway.cfm?id=' + doiLastPart,
         hasCors: false,
@@ -193,9 +193,9 @@ module.exports = function paperhiveSources(_options) {
   }
 
   return {
-    parseUrl,
-    getPdfConnection,
-    getAccessiblePdfUrl,
+    parseUrl: parseUrl,
+    getPdfConnection: getPdfConnection,
+    getAccessiblePdfUrl: getAccessiblePdfUrl,
     hostnames: ['arxiv.org', 'link.springer.com'],
   };
 };
