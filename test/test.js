@@ -167,7 +167,7 @@ describe('getPdfConnection()', function () {
         id: '1405.0001',
         revision: 'v1',
       },
-      openAccess: true,
+      isOpenAccess: true,
     };
     var out = sources.getAccessiblePdfUrl(doc);
     out.should.be.equal(
