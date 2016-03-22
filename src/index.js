@@ -52,28 +52,6 @@ module.exports = function paperhiveSources(_options) {
     }
   }
 
-  function getAccessiblePdfUrl(documentRevision) {
-    // TODO actually check if user has access beyond open access
-    var userHasAccess = documentRevision.isOpenAccess;
-    if (!userHasAccess) {
-      throw new Error('You currently have no access to the PDF.');
-    }
-
-    var pdfConn = documentRevision.file;
-
-    if (pdfConn.hasCors && urlPackage.parse(pdfConn.url).protocol === 'https') {
-      // all good
-      return pdfConn.url;
-    }
-
-    // No HTTPS/Cors? PaperHive can proxy the document if it's open access.
-    if (documentRevision.isOpenAccess) {
-      return options.apiUrl + '/proxy?url=' + encodeURIComponent(pdfConn.url);
-    }
-
-    throw new Error('The publisher makes the PDF available only through an insecure connection.');
-  }
-
   return {
     parseUrl: parseUrl,
     getAccessiblePdfUrl: getAccessiblePdfUrl,
