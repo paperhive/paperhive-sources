@@ -1,5 +1,3 @@
-var urlPackage = require('url');
-
 module.exports = function paperhiveSources(_options) {
   // sanitize options
   var options = _options || {};
@@ -54,7 +52,6 @@ module.exports = function paperhiveSources(_options) {
 
   return {
     parseUrl: parseUrl,
-    getAccessiblePdfUrl: getAccessiblePdfUrl,
     hostnames: ['arxiv.org', 'link.springer.com'],
   };
 };
