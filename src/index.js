@@ -2,7 +2,7 @@ module.exports = function paperhiveSources(_options) {
   // sanitize options
   var options = _options || {};
   options = {
-    apiUrl: options.apiUrl || 'https://paperhive.org/api',
+    apiUrl: options.apiUrl || 'https://paperhive.org/api'
   };
 
   var urlParser = [
@@ -18,7 +18,7 @@ module.exports = function paperhiveSources(_options) {
 
       var ret = {
         type: 'arxiv',
-        id: result[1],
+        id: result[1]
       };
       if (result[2]) {
         ret.revision = 'v' + result[2];
@@ -35,10 +35,10 @@ module.exports = function paperhiveSources(_options) {
       if (!result) return undefined;
       var a = {
         type: 'springer',
-        id: result[1] + '/' + result[2],
+        id: result[1] + '/' + result[2]
       };
       return a;
-    },
+    }
   ];
 
   function parseUrl(url) {
@@ -48,10 +48,11 @@ module.exports = function paperhiveSources(_options) {
         return result;
       }
     }
+    return undefined;
   }
 
   return {
     parseUrl: parseUrl,
-    hostnames: ['arxiv.org', 'link.springer.com'],
+    hostnames: ['arxiv.org', 'link.springer.com']
   };
 };

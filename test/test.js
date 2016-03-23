@@ -6,29 +6,29 @@ describe('parseUrl()', function () {
     sources.parseUrl('http://arxiv.org/abs/1208.0264v4').should.eql({
       type: 'arxiv',
       id: '1208.0264',
-      revision: 'v4',
+      revision: 'v4'
     });
     sources.parseUrl('http://arxiv.org/pdf/1208.0264.pdf').should.eql({
       type: 'arxiv',
-      id: '1208.0264',
+      id: '1208.0264'
     });
     sources.parseUrl('http://de.arxiv.org/abs/hep-th/0608195v3').should.eql({
       type: 'arxiv',
       id: 'hep-th/0608195',
-      revision: 'v3',
+      revision: 'v3'
     });
   });
 
   it('should parse springer URL', function () {
     var sll15 = {
       type: 'springer',
-      id: '10.1007/s10714-015-1876-6',
+      id: '10.1007/s10714-015-1876-6'
     };
     [
       'http://link.springer.com/article/10.1007%2Fs10714-015-1876-6',
       'http://link.springer.com/article/10.1007/s10714-015-1876-6',
       'http://link.springer.com/10.1007%2Fs10714-015-1876-6',
-      'http://link.springer.com/10.1007/s10714-015-1876-6',
+      'http://link.springer.com/10.1007/s10714-015-1876-6'
     ].forEach(function (url) {
       sources.parseUrl(url).should.eql(sll15);
     });
