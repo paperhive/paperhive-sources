@@ -19,6 +19,18 @@ describe('parseUrl()', function () {
     });
   });
 
+  it('should parse oapen URLs', function () {
+    var oapen = {type: 'oapen', id: '605035'};
+    [
+      'http://oapen.org/search?identifier=605035',
+      'https://oapen.org/search?identifier=605035',
+      'http://www.oapen.org/search?identifier=605035',
+      'https://www.oapen.org/search?identifier=605035'
+    ].forEach(function (url) {
+      sources.parseUrl(url).should.eql(oapen);
+    });
+  });
+
   it('should parse springer URL', function () {
     var sll15 = {
       type: 'springer',
