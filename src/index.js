@@ -25,6 +25,13 @@ module.exports = function paperhiveSources(_options) {
       }
       return ret;
     },
+    function parseOapen(url) {
+      var result =
+        /^(?:https?:\/\/)?(?:www\.)?oapen\.org\/search\?identifier=(\d*)$/
+        .exec(url);
+      if (!result) return undefined;
+      return {type: 'oapen', id: result[1]};
+    },
     function parseSpringer(url) {
       var regExp = new RegExp(
         '^(?:https?://)?link\.springer\.com/' +
