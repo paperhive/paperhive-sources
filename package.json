@@ -1,6 +1,6 @@
 {
   "name": "paperhive-sources",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "description": "Checks if a given URL is valid for PaperHive and parses it.",
   "main": "src/index.js",
   "scripts": {
